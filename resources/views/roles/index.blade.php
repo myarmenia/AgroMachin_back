@@ -58,79 +58,91 @@
     <section class="right-section">
         <div class="right-sectionChild">
             <div class="title-link2">
-              <div class="title-linkChild">
-                <a href="#" class="link-direction">Գլխավոր</a>
-                <div>></div>
-                <a href="./page.html" class="link-direction">Դեր</a>
-              </div>
-              <a href="{{ route('roles.create') }}" class="addPage" id="addPage">+ Նոր դեր</a>
+                <div class="title-linkChild">
+                    <a href="#" class="link-direction">Գլխավոր</a>
+                    <div>></div>
+                    <a href="./page.html" class="link-direction">Դեր</a>
+                </div>
+                <a href="{{ route('roles.create') }}" class="addPage" id="addPage">+ Նոր դեր</a>
             </div>
 
             <div class="tableContainer">
-              <div class="table-title">
-                <div class="page">Դերեր</div>
-              </div>
-              <div class="tableChild">
-                <table>
-                  <tr class="firstLine">
-                    <td>№</td>
-                    <td>Դեր</td>
+                <div class="table-title">
+                    <div class="page">Դերեր</div>
+                </div>
+                <div class="tableChild">
+                    <table>
+                        <tr class="firstLine">
+                            <td>№</td>
+                            <td>Դեր</td>
 
-                    <td>Կարգավիճակ</td>
-                    <td>Փոփոխել</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>Ադմինիստրատոր</td>
+                            <td>Կարգավիճակ</td>
+                            <td>Փոփոխել</td>
+                        </tr>
 
-                    <td>
-                      <label class="toggle">
-                        <input class="toggle-checkbox" type="checkbox" />
-                        <div class="toggle-switch"></div>
-                      </label>
-                    </td>
-
-                    <td>
-                      <a>
-                        <img src="../../assets/table/pen.svg" class="pen"
-                      /></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>Ադմինիստրատոր</td>
-
-                    <td>
-                      <label class="toggle">
-                        <input class="toggle-checkbox" type="checkbox" />
-                        <div class="toggle-switch"></div>
-                      </label>
-                    </td>
-
-                    <td>
-                      <img src="../../assets/table/pen.svg" class="pen" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>Ադմինիստրատոր</td>
-
-                    <td>
-                      <label class="toggle">
-                        <input class="toggle-checkbox" type="checkbox" />
-                        <div class="toggle-switch"></div>
-                      </label>
-                    </td>
-
-                    <td>
-                      <img src="{{ asset('assets/images/table/pen.svg') }}" class="pen" />
-                    </td>
-                  </tr>
-                </table>
-              </div>
+                        @foreach ($roles as $key => $role)
+                            <tr>
+                                <td>{{++$i}}</td>
+                                <td>{{ $role->name }}</td>
+                                <td>
+                                    <label class="toggle">
+                                        <input class="toggle-checkbox" type="checkbox" {{ $role->status ? 'checked' : ''}}>
+                                        <div class="toggle-switch"></div>
+                                    </label>
+                                </td>
+                                <td>
+                                    <a href="{{ route('roles.edit', $role->id) }}">
+                                        <img src="{{ asset('assets/images/table/pen.svg') }}" class="pen">
+                                    </a>
+                                    <form action="{{route('roles.destroy', $role->id)}}" method="POST">
+                                        @csrf
+                                        @method('delete')
+                                        <button >111
+                                            <img src="{{ asset('assets/images/table/pen.svg') }}" class="pen">
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
             </div>
-          </div>
+        </div>
+{{-- ========================= my pagin ation ========================= --}}
+{{ $roles->links() }}
 
+<div class="pagination">
+    @foreach ($roles->total() as $item)
+
+    @endforeach
+    <div class="page-item previous-page">
+      <a class="page-link" href="javascript:void(0)"><span>‹‹</span></a>
+    </div>
+    <div class="page-item current-page">
+      <a class="page-link" href="javascript:void(0)">1</a>
+    </div>
+    <div class="page-item dots">
+      <a class="page-link" href="javascript:void(0)">...</a>
+    </div>
+    <div class="page-item current-page">
+      <a class="page-link" href="javascript:void(0)">5</a>
+    </div>
+    <div class="page-item current-page page-active">
+      <a class="page-link" href="javascript:void(0)">6</a>
+    </div>
+    <div class="page-item current-page">
+      <a class="page-link" href="javascript:void(0)">7</a>
+    </div>
+    <div class="page-item dots">
+      <a class="page-link" href="javascript:void(0)">...</a>
+    </div>
+    <div class="page-item current-page">
+      <a class="page-link" href="javascript:void(0)">13</a>
+    </div>
+    <div class="page-item next-page">
+      <a class="page-link" href="javascript:void(0)"><span>››</span></a>
+    </div>
+  </div>
         <!-- ------------------------------------------------------- -->
         <!-- Pagination -->
         <!-- ------------------------------------------------------- -->
@@ -183,7 +195,9 @@
                 <button class="btn-transparent" id="modal-deny-btn">
                   Չեղարկել
                 </button>
-                <button class="addPage" id="modal-accept-btn">Հաստատել</button>
+                {{-- <form> --}}
+                <a href="{{route('change_role_status', [2, 1])}}" class="addPage" id="modal-accept-btn">Հաստատել</a>
+                {{-- </form> --}}
               </div>
             </div>
           </div>

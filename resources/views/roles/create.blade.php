@@ -55,57 +55,77 @@
     {!! Form::close() !!} --}}
     <section class="right-section new-roleSection">
         <div class="right-sectionChild">
-          <div class="title-link2">
-            <div class="title-linkChild">
-              <a href="#" class="link-direction">Գլխավոր</a>
-              <div>></div>
-              <a href="./page.html" class="link-direction"> Օգտատերեր </a>
-              <div>></div>
-              <a href="" class="link-direction"> Փոփոխել դերի տվյալները</a>
-            </div>
-          </div>
-          <div class="app">
-            <div class="new_role">
-              <div class="create_role">
-                <h3>Ստեղծել նոր դեր</h3>
-              </div>
-              <form action="" id="form" class="role_form">
-                <div class="role_block">
-                  <input type="text" class="role_input" placeholder="Դեր" />
-                  <div class="input_checkbox">
-                    <label for=""
-                      ><input type="checkbox" /> Օգտատիրոջ ավելացում</label
-                    >
-                    <label for=""
-                      ><input type="checkbox" /> Օգտատիրոջ փոփոխում</label
-                    >
-                    <label for=""
-                      ><input type="checkbox" /> Օգտատիրոջ ջնջում</label
-                    >
-                    <label for=""><input type="checkbox" /> Դեր</label>
-                  </div>
-                  <div class="buttons">
-                    <input class="button1" type="submit" value="Չեղարկել" />
-                    <input class="button2" type="submit" value="Պահպանել" />
-                  </div>
+            <div class="title-link2">
+                <div class="title-linkChild">
+                    <a href="#" class="link-direction">Գլխավոր</a>
+                    <div>></div>
+                    <a href="./page.html" class="link-direction"> Օգտատերեր </a>
+                    <div>></div>
+                    <a href="" class="link-direction"> Ստեղծել նոր դեր</a>
                 </div>
-              </form>
             </div>
-          </div>
+            <div class="app">
+                <div class="new_role">
+                    <div class="create_role">
+                        <h3>Ստեղծել նոր դեր</h3>
+                    </div>
+                    <form action="{{route('roles.store')}}" method="POST" id="form" class="role_form">
+                        @csrf
+                        <div class="role_block">
+                            <input type="text" class="role_input @error('name') error_border @enderror" placeholder="Դեր" name="name" value="{{ old('name') }}" >
+
+                            @error('name')
+                                <div class="error_message">{{ $message }}</div>
+                            @enderror
+                            <div class="input_checkbox">
+                                {{-- <label for="">
+                                    <input type="checkbox" /> Օգտատիրոջ ավելացում
+                                </label>
+                                <label for="">
+                                    <input type="checkbox" /> Օգտատիրոջ փոփոխում
+                                </label>
+                                <label for="">
+                                    <input type="checkbox" /> Օգտատիրոջ ջնջում
+                                </label>
+                                <label for=""><input type="checkbox" /> Դեր</label> --}}
+                                @foreach($permission as $value)
+                                    <label for="">
+                                        <input type="checkbox" name="permission[]" value="{{ $value->id }}"> {{ $value->name }}
+                                    </label>
+                                @endforeach
+                                @error('permission')
+                                    <div class="error_message">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="buttons">
+                                <a class="button1" href="{{route('roles.index')}}">Չեղարկել</a>
+                                <input class="button2" type="submit" value="Պահպանել" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="tool">
-          <div class="new_tool">
-            <div class="add_tool">
-              <h3>Ավելացնել նոր գործիք</h3>
+            <div class="new_tool">
+                <div class="add_tool">
+                    <h3>Ավելացնել նոր գործիք</h3>
+                </div>
+                <form action="{{ route('permissions.store')}}" method="POST">
+                    @csrf
+                    <label for="">Գործիքի անունը*
+                        <input type="text" placeholder="Օգտատիրոջ հեռացում" name="permission_name" class=" @error('permission_name') error_border @enderror">
+                    </label>
+                    @error('permission_name')
+                        <div class="error_message">{{ $message }}</div>
+                    @enderror
+                    <div class="tool_name">
+                        <input type="submit" class="submit" value="Պահպանել" >
+                    </div>
+                </form>
             </div>
-            <label for=""
-              >Գործիքի անունը*
-              <input type="text" placeholder="Օգտատիրոջ հեռացում"
-            /></label>
-            <div class="tool_name">
-              <input type="submit" class="submit" value="Պահպանել" />
-            </div>
-          </div>
         </div>
-      </section>
+    </section>
+
+      {{-- ============== --}}
 @endsection
