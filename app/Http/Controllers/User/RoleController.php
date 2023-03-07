@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role as ModelsRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -24,9 +26,9 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id','DESC')->paginate(5);
+        $roles = ModelsRole::orderBy('id','DESC')->paginate(2);
         return view('roles.index',compact('roles'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+            ->with('i', ($request->input('page', 1) - 1) * 2);
     }
 
     /**
@@ -36,7 +38,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
+        $permission = Permission::latest()->get();
         return view('roles.create',compact('permission'));
     }
 
@@ -49,7 +51,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:roles,name',
+            'name' => 'required|regex:/^[a-zA-Z]+$/u|unique:roles,name',
             'permission' => 'required',
         ]);
 
@@ -84,7 +86,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        $permission = Permission::get();
+        $permission = Permission::latest()->get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
@@ -102,7 +104,7 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|regex:/^[a-zA-Z]+$/u',
             'permission' => 'required',
         ]);
 
@@ -112,8 +114,15 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->input('permission'));
 
-        return redirect()->route('roles.index')
-                        ->with('success','Role updated successfully');
+        return redirect()->back();
+
+    }
+
+    public function change_role_status($id, $status){
+        $role = Role::find($id);
+        $role->status = $status;
+        $role->save();
+        return redirect()->back();
     }
     /**
      * Remove the specified resource from storage.
@@ -121,10 +130,21 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // public function delete($id)
+    // {
+    //     DB::table("roles")->where('id',$id)->delete();
+    //     return redirect()->route('roles.index')
+    //                     ->with('success','Role deleted successfully');
+    // }
     public function destroy($id)
     {
-        DB::table("roles")->where('id',$id)->delete();
-        return redirect()->route('roles.index')
-                        ->with('success','Role deleted successfully');
+
+        $deleted = ModelsRole::where('id',$id)->first();
+        $deleted->delete();
+        if($deleted){
+            return redirect()->route('roles.index')
+            ->with('success','Role deleted successfully');
+        }
+
     }
 }
