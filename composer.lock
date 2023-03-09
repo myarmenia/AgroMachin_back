@@ -5923,6 +5923,7 @@
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
                 "source": "https://github.com/filp/whoops/tree/2.15.0"
+
             },
             "funding": [
                 {
@@ -5930,7 +5931,9 @@
                     "type": "github"
                 }
             ],
+
             "time": "2023-03-03T12:00:00+00:00"
+
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -6051,6 +6054,7 @@
         },
         {
             "name": "laravel/sail",
+
             "version": "v1.21.1",
             "source": {
                 "type": "git",
@@ -6061,6 +6065,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/sail/zipball/fd8d04bc546457b504aa2b3c2d541840551f836f",
                 "reference": "fd8d04bc546457b504aa2b3c2d541840551f836f",
+
                 "shasum": ""
             },
             "require": {
@@ -6112,7 +6117,9 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
+
             "time": "2023-03-01T23:07:57+00:00"
+
         },
         {
             "name": "mockery/mockery",
@@ -6188,16 +6195,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.11.0",
+            "version": "1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614"
+                "reference": "7284c22080590fb39f2ffa3e9057f10a4ddd0e0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/14daed4296fae74d9e3201d2c4925d1acb7aa614",
-                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/7284c22080590fb39f2ffa3e9057f10a4ddd0e0c",
+                "reference": "7284c22080590fb39f2ffa3e9057f10a4ddd0e0c",
                 "shasum": ""
             },
             "require": {
@@ -6235,7 +6242,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.11.0"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.11.1"
             },
             "funding": [
                 {
@@ -6243,7 +6250,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-03T13:19:32+00:00"
+            "time": "2023-03-08T13:26:56+00:00"
         },
         {
             "name": "nunomaduro/collision",
@@ -6446,6 +6453,7 @@
         },
         {
             "name": "phpunit/php-code-coverage",
+
             "version": "9.2.25",
             "source": {
                 "type": "git",
@@ -6456,6 +6464,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/0e2b40518197a8c0d4b08bc34dfff1c99c508954",
                 "reference": "0e2b40518197a8c0d4b08bc34dfff1c99c508954",
+
                 "shasum": ""
             },
             "require": {
@@ -6477,8 +6486,8 @@
                 "phpunit/phpunit": "^9.3"
             },
             "suggest": {
-                "ext-pcov": "*",
-                "ext-xdebug": "*"
+                "ext-pcov": "PHP extension that provides line coverage",
+                "ext-xdebug": "PHP extension that provides line coverage as well as branch and path coverage"
             },
             "type": "library",
             "extra": {
@@ -6511,7 +6520,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
+
                 "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.25"
+
             },
             "funding": [
                 {
@@ -6519,7 +6530,9 @@
                     "type": "github"
                 }
             ],
+
             "time": "2023-02-25T05:32:00+00:00"
+
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -6764,6 +6777,7 @@
         },
         {
             "name": "phpunit/phpunit",
+
             "version": "9.6.4",
             "source": {
                 "type": "git",
@@ -6774,6 +6788,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9125ee085b6d95e78277dc07aa1f46f9e0607b8d",
                 "reference": "9125ee085b6d95e78277dc07aa1f46f9e0607b8d",
+
                 "shasum": ""
             },
             "require": {
@@ -6806,8 +6821,8 @@
                 "sebastian/version": "^3.0.2"
             },
             "suggest": {
-                "ext-soap": "*",
-                "ext-xdebug": "*"
+                "ext-soap": "To be able to generate mocks based on WSDL files",
+                "ext-xdebug": "PHP extension that provides line coverage as well as branch and path coverage"
             },
             "bin": [
                 "phpunit"
@@ -6846,7 +6861,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
+
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.4"
+
             },
             "funding": [
                 {
@@ -6862,7 +6879,9 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2023-02-27T13:06:37+00:00"
+
         },
         {
             "name": "sebastian/cli-parser",
