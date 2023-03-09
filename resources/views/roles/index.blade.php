@@ -112,9 +112,7 @@
 {{ $roles->links() }}
 
 <div class="pagination">
-    @foreach ($roles->total() as $item)
-
-    @endforeach
+  
     <div class="page-item previous-page">
       <a class="page-link" href="javascript:void(0)"><span>‹‹</span></a>
     </div>

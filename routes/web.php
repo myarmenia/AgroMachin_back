@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Countingplaces\CountingPlacesController;
 use App\Http\Controllers\Dictionary\DictionaryController;
 use App\Http\Controllers\Languages\LanguageController;
 use App\Http\Controllers\Profile\ProfileController;
@@ -39,5 +40,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
+
+    Route::resource('countingplaces',CountingPlacesController::class);
 
 });
