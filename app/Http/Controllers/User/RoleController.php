@@ -118,7 +118,8 @@ class RoleController extends Controller
 
     }
 
-    public function change_role_status($id, $status){
+    public function change_role_status(Request $request, $id, $status){
+
         $role = Role::find($id);
         $role->status = $status;
         $role->save();
@@ -130,20 +131,16 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function delete($id)
-    // {
-    //     DB::table("roles")->where('id',$id)->delete();
-    //     return redirect()->route('roles.index')
-    //                     ->with('success','Role deleted successfully');
-    // }
+
     public function destroy($id)
     {
 
         $deleted = ModelsRole::where('id',$id)->first();
         $deleted->delete();
         if($deleted){
-            return redirect()->route('roles.index')
-            ->with('success','Role deleted successfully');
+            return redirect()->back();
+            // return redirect()->route('roles.index')
+            // ->with('success','Role deleted successfully');
         }
 
     }

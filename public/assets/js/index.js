@@ -1,8 +1,3 @@
-/** @format */
-
-// active link
-
-// active link
 
 let arrow = document.querySelectorAll(".arrow");
 let iocn_link = document.getElementsByClassName("iocn-link");
