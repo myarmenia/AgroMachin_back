@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\EquipmentType\EquimentTypeController;
 use \App\Http\Controllers\EquipmentType\EquimentTypeSearchController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
