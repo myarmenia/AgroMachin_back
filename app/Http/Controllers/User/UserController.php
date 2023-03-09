@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Language;
+use App\Models\Role as ModelsRole;
+use App\Models\SettlementPlace;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Hash;
@@ -25,8 +28,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles'));
+        // $roles = Role::pluck('name','name')->all();
+        $roles = ModelsRole::pluck('name','name')->all();
+        $languages = Language::all();
+        $settlement_places = SettlementPlace::all();
+        return view('users.create',compact('roles', 'settlement_places', 'languages'));
     }
 
     /**

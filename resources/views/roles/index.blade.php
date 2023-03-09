@@ -58,143 +58,94 @@
     <section class="right-section">
         <div class="right-sectionChild">
             <div class="title-link2">
-              <div class="title-linkChild">
-                <a href="#" class="link-direction">Գլխավոր</a>
-                <div>></div>
-                <a href="./page.html" class="link-direction">Դեր</a>
-              </div>
-              <a href="{{ route('roles.create') }}" class="addPage" id="addPage">+ Նոր դեր</a>
+                <div class="title-linkChild">
+                    <a href="#" class="link-direction">Գլխավոր</a>
+                    <div>></div>
+                    <a href="./page.html" class="link-direction">Դեր</a>
+                </div>
+                <a href="{{ route('roles.create') }}" class="addPage" id="addPage">+ Նոր դեր</a>
             </div>
 
             <div class="tableContainer">
-              <div class="table-title">
-                <div class="page">Դերեր</div>
-              </div>
-              <div class="tableChild">
-                <table>
-                  <tr class="firstLine">
-                    <td>№</td>
-                    <td>Դեր</td>
+                <div class="table-title">
+                    <div class="page">Դերեր</div>
+                </div>
+                <div class="tableChild">
+                    <table data-route="change-role-status" data-delete="roles" id="table-route">
+                        <tr class="firstLine">
+                            <td>№</td>
+                            <td>Դեր</td>
+                            <td>Կարգավիճակ</td>
+                            <td>Ջնջել</td>
+                            <td>Փոփոխել</td>
+                        </tr>
 
-                    <td>Կարգավիճակ</td>
-                    <td>Փոփոխել</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>Ադմինիստրատոր</td>
-
-                    <td>
-                      <label class="toggle">
-                        <input class="toggle-checkbox" type="checkbox" />
-                        <div class="toggle-switch"></div>
-                      </label>
-                    </td>
-
-                    <td>
-                      <a>
-                        <img src="../../assets/table/pen.svg" class="pen"
-                      /></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>Ադմինիստրատոր</td>
-
-                    <td>
-                      <label class="toggle">
-                        <input class="toggle-checkbox" type="checkbox" />
-                        <div class="toggle-switch"></div>
-                      </label>
-                    </td>
-
-                    <td>
-                      <img src="../../assets/table/pen.svg" class="pen" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>Ադմինիստրատոր</td>
-
-                    <td>
-                      <label class="toggle">
-                        <input class="toggle-checkbox" type="checkbox" />
-                        <div class="toggle-switch"></div>
-                      </label>
-                    </td>
-
-                    <td>
-                      <img src="{{ asset('assets/images/table/pen.svg') }}" class="pen" />
-                    </td>
-                  </tr>
-                </table>
-              </div>
+                        @foreach ($roles as $key => $role)
+                            <tr>
+                                <td>{{++$i}}</td>
+                                <td>{{ $role->name }}</td>
+                                <td>
+                                    <label class="toggle">
+                                        <input class="toggle-checkbox" type="checkbox" {{ $role->status ? 'checked' : ''}} data-id="{{ $role->id }}">
+                                        <div class="toggle-switch"></div>
+                                    </label>
+                                </td>
+                                <td>
+                                    <img src="{{ asset('assets/images/table/Trash.svg') }}" class="trashbin" data-id="{{ $role->id }}">
+                                </td>
+                                <td>
+                                    <a href="{{ route('roles.edit', $role->id) }}">
+                                        <img src="{{ asset('assets/images/table/pen.svg') }}" class="pen">
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
             </div>
-          </div>
+        </div>
+
 
         <!-- ------------------------------------------------------- -->
         <!-- Pagination -->
-        <!-- ------------------------------------------------------- -->
-        <div class="pagination">
-          <div class="page-item previous-page">
-            <a class="page-link" href="javascript:void(0)"><span>‹‹</span></a>
-          </div>
-          <div class="page-item current-page">
-            <a class="page-link" href="javascript:void(0)">1</a>
-          </div>
-          <div class="page-item dots">
-            <a class="page-link" href="javascript:void(0)">...</a>
-          </div>
-          <div class="page-item current-page">
-            <a class="page-link" href="javascript:void(0)">5</a>
-          </div>
-          <div class="page-item current-page page-active">
-            <a class="page-link" href="javascript:void(0)">6</a>
-          </div>
-          <div class="page-item current-page">
-            <a class="page-link" href="javascript:void(0)">7</a>
-          </div>
-          <div class="page-item dots">
-            <a class="page-link" href="javascript:void(0)">...</a>
-          </div>
-          <div class="page-item current-page">
-            <a class="page-link" href="javascript:void(0)">13</a>
-          </div>
-          <div class="page-item next-page">
-            <a class="page-link" href="javascript:void(0)"><span>››</span></a>
-          </div>
-        </div>
-        <!-- ======================================================= -->
-        <!-- ======================================================= -->
+        {{ $roles->links() }}
         <!-- ======================================================= -->
     </section>
 
+
+    {{-- ============= modal for change status ===================== --}}
     <div class="modal-container">
-        <div class="modal" id="confirm-modal">
-          <div class="modal-head">
-            <h3 class="modal-title">Կարգավիճակի փոփոխություն</h3>
-            <div class="close">&#x2715;</div>
-          </div>
-          <div class="modal-content">
-            <div class="modal-confirm-box">
-              <p class="modal-confirm-box-title">
-                Դուք ցանկանո՞ւմ եք ապակտիվացնել օգտատիրոջը
-              </p>
-              <div class="modal-confirm-buttons">
-                <button class="btn-transparent" id="modal-deny-btn">
-                  Չեղարկել
-                </button>
-                <button class="addPage" id="modal-accept-btn">Հաստատել</button>
-              </div>
+        <div class="modal" id="confirm-modal" data-status-id="" data-status="">
+            <div class="modal-head">
+                <h3 class="modal-title">Կարգավիճակի փոփոխություն</h3>
+                <div class="close">&#x2715;</div>
             </div>
-          </div>
+            <div class="modal-content">
+                <div class="modal-confirm-box">
+                    <p class="modal-confirm-box-title">
+                        Դուք ցանկանո՞ւմ եք հաստատել գործողությունը
+                    </p>
+
+                    <div class="modal-confirm-buttons">
+                        <button class="btn-transparent" id="modal-deny-btn">Չեղարկել</button>
+
+                        <form action="" id="modal-accept-form" method="post">
+                            @csrf
+                            <input type="hidden" name="_method" value="delete" id="form_method">
+                            <button href="" class="addPage" id="modal-accept-btn">Հաստատել</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
     @section('script')
         <script src="{{ asset('assets/js/modal.js') }}"></script>
         <script>
-            document.querySelectorAll(".toggle").forEach((el) => {
-              el.addEventListener("click", () => showModal("#confirm-modal"));
-            });
+            // document.querySelectorAll(".toggle").forEach((el) => {
+            //   el.addEventListener("click", () => showModal("#confirm-modal"));
+            // });
         </script>
     @endsection
 @endsection

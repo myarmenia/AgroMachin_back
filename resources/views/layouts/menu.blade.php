@@ -54,7 +54,7 @@
             <div class="menu-panel">
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Տեխնիկայի հաշվառում</a></li>
-                    <li><a href="#">Հաշվառման վայրեր</a></li>
+                    <li><a href="{{route('countingplaces.index')}}">Հաշվառման վայրեր</a></li>
                     <li><a href="#">Հաշվառման հայտ</a></li>
                     <li><a href="#">Տեխնիկայի հաշվառումից հանել</a></li>
                 </ul>

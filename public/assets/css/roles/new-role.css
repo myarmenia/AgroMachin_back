@@ -46,6 +46,11 @@
     outline: none;
     padding-left: 10px;
   }
+  .choose_tool {
+    font-size: 12px;
+    color: #5f6368;
+    margin-top: 20px;
+  }
   .new_role .role_form .role_block .input_checkbox {
     display: flex;
     flex-direction: column;
@@ -108,7 +113,7 @@
   .tool .new_tool label {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: baseline;
     gap: 15px;
     font-size: 14px;
     font-weight: 600;
