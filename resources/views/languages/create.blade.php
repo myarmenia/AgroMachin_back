@@ -1,11 +1,10 @@
 @extends('layouts.app')
 @section('style')
-    <link rel="stylesheet" href="{{ asset('assets/css/users/users.css') }}" >
-    <link rel="stylesheet" href="{{ asset('assets/css/users/media.css') }}" >
+    <link rel="stylesheet" href="{{ asset('assets/css/languages/create-language.css') }}" >
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
+    {{-- @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -13,8 +12,8 @@
                 @endforeach
             </ul>
         </div>
-    @endif
-    <section class="right-section">
+    @endif --}}
+    {{-- <section class="right-section">
         <div class="right-sectionChild">
             <div class="app">
                 <div class="new_user">
@@ -22,9 +21,9 @@
                         <h3>Ստեղծել նոր lezu</h3>
                     </div>
                     <form action="{{ route('languages.store')}}" method="post" class="user_form">
-                        @csrf
+
                         <div class="place flex">
-                            <p>lezuner</p>
+                            <p>lezuner</p>@csrf
                             <select name="name" class="select" id="">
                                 <option value="">lezuner</option>
 
@@ -59,7 +58,65 @@
                 </div>
             </div>
         </div>
+    </section> --}}
+
+    <section class="right-section">
+        <div class="right-sectionChild">
+            <div class="title-link2 vehicleType_crumbs_container">
+                <div>
+                    <div class="title-linkChild vehicleType_crumbs_box1">
+                        <a href="#" class="link-direction">Գլխավոր</a>
+                        <div>></div>
+                        <a href="./page.html" class="link-direction">Լեզուներ</a>
+                        <div>></div>
+                        <a href="./page.html" class="link-direction">Ստեղծել նոր լեզու</a>
+                    </div>
+                </div>
+            </div>
+            <div class="app">
+                <div class="new_language">
+                    <div class="create_language">
+                        <h3>Ստեղծել նոր լեզու</h3>
+                    </div>
+                    <form action="{{ route('languages.store')}}" method="post" id="form" class="language_form">
+                        @csrf
+                        <div class="language_block">
+                            <div class="selectLanguage">
+                                <label for="" class="language">Լեզու*
+                                    <div class="select">
+                                        <select id="standard-select" name="name">
+                                            <option value="">Ընտրել լեզուն</option>
+                                            <option value="hy">Հայերեն</option>
+                                            <option value="ru">Русский</option>
+                                            <option value="en">English</option>
+                                        </select>
+                                    </div>
+                                </label>
+                                @error('name')
+                                    <div class="error_message">{{ $message }}</div>
+                                @enderror
+                                <label for="" class="sections">Բաժիններ
+                                    <input type="text" placeholder="Նոր բաժին" name="new_section">
+                                </label>
+                                @error('new_section')
+                                    <div class="error_message">{{ $message }}</div>
+                                @enderror
+                                <div class="input_checkbox">
+                                    @foreach ($sections as $section)
+                                        <label for=""><input type="checkbox" name="sections[]" value="{{$section[0]->name}}"> {{$section[0]->name}}</label>
+                                    @endforeach
+                                </div>
+                                @error('sections')
+                                    <div class="error_message">{{ $message }}</div>
+                                @enderror
+                                <div class="buttons">
+                                    <input class="button2" type="submit" value="Պահպանել">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
-
-
 @endsection

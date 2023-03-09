@@ -18,9 +18,9 @@ class LanguageController extends Controller
      */
     public function index(Request $request)
     {
-        $languages = Language::orderBy('id','DESC')->paginate(5);
+        $languages = Language::orderBy('id','DESC')->paginate(1);
         return view('languages.index',compact('languages'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+            ->with('i', ($request->input('page', 1) - 1) * 1);
     }
 
     /**
@@ -46,13 +46,22 @@ class LanguageController extends Controller
         // dd($request->sections);
         $validate = [
             "name" => "required",
-            "sections" => "required",
+            // "sections" => "required",
         ];
 
         $sections_array = $request->sections;
         if($request->new_section != null){
-            $validate['new_section']='regex:/^[a-zA-Z]+$/u|max:255|unique:language_sections,name';
-            $sections_array[count($request->sections)] = $request->new_section;
+            $validate['new_section'] = 'regex:/^[a-zA-Z]+$/u|max:255|unique:language_sections,name';
+            if($request->sections != null && count($request->sections) > 0){
+                $sections_array[count($request->sections)] = $request->new_section;
+            }
+            else{
+                $sections_array[0] = $request->new_section;
+            }
+        }
+        else{
+            $validate['sections'] = 'required';
+
         }
 
         $validator = Validator::make($request->all(), $validate);
@@ -124,7 +133,17 @@ class LanguageController extends Controller
         $sections_array = $request->sections;
         if($request->new_section != null){
             $validate['new_section']='regex:/^[a-zA-Z]+$/u|max:255|unique:language_sections,name';
-            $sections_array[count($request->sections)] = $request->new_section;
+            if($request->sections != null && count($request->sections) > 0){
+                $sections_array[count($request->sections)] = $request->new_section;
+            }
+            else{
+                $sections_array[0] = $request->new_section;
+            }
+
+        }
+        else{
+            $validate['sections'] = 'required';
+
         }
 
         $validator = Validator::make($request->all(), $validate);

@@ -98,8 +98,8 @@
                                 @enderror
                             </div>
                             <div class="buttons">
-                                <a class="button1" href="{{route('roles.index')}}">Չեղարկել</a>
-                                <input class="button2" type="submit" value="Պահպանել" />
+                                <a class="submit" href="{{route('roles.index')}}">Չեղարկել</a>
+                                <input class="submit" type="submit" value="Պահպանել" />
                             </div>
                         </div>
                     </form>
@@ -114,11 +114,14 @@
                 <form action="{{ route('permissions.store')}}" method="POST">
                     @csrf
                     <label for="">Գործիքի անունը*
-                        <input type="text" placeholder="Օգտատիրոջ հեռացում" name="permission_name" class=" @error('permission_name') error_border @enderror">
+                        <div class="input_error">
+                            <input type="text" placeholder="Օգտատիրոջ հեռացում" name="permission_name" class=" @error('permission_name') error_border @enderror">
+                            @error('permission_name')
+                                <div class="error_message">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </label>
-                    @error('permission_name')
-                        <div class="error_message">{{ $message }}</div>
-                    @enderror
+
                     <div class="tool_name">
                         <input type="submit" class="submit" value="Պահպանել" >
                     </div>

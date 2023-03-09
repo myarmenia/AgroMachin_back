@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('dictionary', DictionaryController::class);
 
     Route::resource('roles', RoleController::class);
-    Route::get('change-role-status/{id}/{status}', [RoleController::class, 'change_role_status'])->name('change_role_status');
+    Route::post('change-role-status/{id}/{status}', [RoleController::class, 'change_role_status'])->name('change_role_status');
 
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
