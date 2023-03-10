@@ -33,7 +33,9 @@ class LoginController extends Controller
     {
         $user = Auth::user();
         $now = date('Y-m-d');
-        return '/profile';
+        // return '/profile';
+        return '/roles';
+
         // if($user->status){
         //     User::where('id', $user->id)->update(['last_authorization' => $now]);
         //     return Auth::user()->isAdmin() ? '/admin/dashboard' : '/user/dashboard';

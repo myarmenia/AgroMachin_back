@@ -91,7 +91,9 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <img src="{{ asset('assets/images/table/Trash.svg') }}" class="trashbin" data-id="{{ $role->id }}">
+                                    <div>
+                                        <img src="{{ asset('assets/images/table/Trash.svg') }}" class="trashbin" data-id="{{ $role->id }}">
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="{{ route('roles.edit', $role->id) }}">

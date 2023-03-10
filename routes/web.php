@@ -37,6 +37,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::resource('languages', LanguageController::class);
+    Route::post('change-language-status/{id}/{status}', [LanguageController::class, 'change_language_status'])->name('change_language_status');
+
     Route::resource('dictionary', DictionaryController::class);
 
     Route::resource('roles', RoleController::class);

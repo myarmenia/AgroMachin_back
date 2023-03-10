@@ -35,6 +35,7 @@
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
+    gap:8px
   }
   .new_language .language_form .language_block .selectLanguage {
     width: 345px;
@@ -42,6 +43,7 @@
     flex-direction: column;
     align-items: flex-end;
     line-height: 3;
+    gap: 8px;
     margin-top: 45px;
   }
   .new_language .language_form .language_block .selectLanguage label {

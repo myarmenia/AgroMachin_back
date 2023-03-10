@@ -260,18 +260,19 @@
                     </div>
                     <img src="{{ asset('assets/images/sideBarIcon/headerUser.svg') }}" class="bx bxs-user signOutBtn" />
                     <div class="userSignOut">
-                    <a href="">
-                        <img
-                        src="{{ asset('assets/images/sideBarIcon/headerUser.svg') }}"
-                        class="bx bxs-user"
-                        />Անձնական էջ
-                    </a>
-                    <a href="">
-                        <img
-                        src="{{ asset('assets/images/sideBarIcon/signout.svg') }}"
-                        class="bx bxs-user"
-                        />Դուրս գալ
-                    </a>
+                        <a href="">
+                            <img
+                            src="{{ asset('assets/images/sideBarIcon/headerUser.svg') }}"
+                            class="bx bxs-user"
+                            />Անձնական էջ
+                        </a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                            <img src="{{ asset('assets/images/sideBarIcon/signout.svg') }}" class="bx bxs-user">Դուրս գալ
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </div>
             </header>

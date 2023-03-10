@@ -78,16 +78,7 @@
                                 <div class="error_message">{{ $message }}</div>
                             @enderror
                             <div class="input_checkbox">
-                                {{-- <label for="">
-                                    <input type="checkbox" /> Օգտատիրոջ ավելացում
-                                </label>
-                                <label for="">
-                                    <input type="checkbox" /> Օգտատիրոջ փոփոխում
-                                </label>
-                                <label for="">
-                                    <input type="checkbox" /> Օգտատիրոջ ջնջում
-                                </label>
-                                <label for=""><input type="checkbox" /> Դեր</label> --}}
+                                
                                 @foreach($permission as $value)
                                     <label for="">
                                         <input type="checkbox" name="permission[]" value="{{ $value->id }}"> {{ $value->name }}

@@ -26,9 +26,9 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = ModelsRole::orderBy('id','DESC')->paginate(2);
+        $roles = ModelsRole::orderBy('id','DESC')->paginate(1);
         return view('roles.index',compact('roles'))
-            ->with('i', ($request->input('page', 1) - 1) * 2);
+            ->with('i', ($request->input('page', 1) - 1) * 1);
     }
 
     /**
@@ -114,7 +114,9 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->input('permission'));
 
-        return redirect()->back();
+
+        return redirect()->route('roles.index');
+
 
     }
 
@@ -135,8 +137,8 @@ class RoleController extends Controller
     public function destroy($id)
     {
 
-        $deleted = ModelsRole::where('id',$id)->first();
-        $deleted->delete();
+        $role = ModelsRole::where('id',$id)->first();
+        $deleted = $role->delete();
         if($deleted){
             return redirect()->back();
             // return redirect()->route('roles.index')

@@ -18,9 +18,9 @@ class LanguageController extends Controller
      */
     public function index(Request $request)
     {
-        $languages = Language::orderBy('id','DESC')->paginate(1);
+        $languages = Language::orderBy('id','DESC')->paginate(6);
         return view('languages.index',compact('languages'))
-            ->with('i', ($request->input('page', 1) - 1) * 1);
+            ->with('i', ($request->input('page', 1) - 1) * 6);
     }
 
     /**
@@ -186,6 +186,14 @@ class LanguageController extends Controller
         }
     }
 
+
+    public function change_language_status(Request $request, $id, $status){
+
+        $language = Language::find($id);
+        $language->status = $status;
+        $language->save();
+        return redirect()->back();
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -194,7 +202,11 @@ class LanguageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $language = Language::where('id',$id)->first();
+        $deleted = $language->delete();
+        if($deleted){
+            return redirect()->back();
+        }
     }
 
 
