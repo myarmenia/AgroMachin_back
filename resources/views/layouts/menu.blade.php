@@ -33,13 +33,13 @@
             </ul>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('equiment-type.index') }}">
                 <img src="{{ asset('assets/images/sidebarIcon/techtype.svg') }}" class="bx bx-grid-alt" >
                 <span class="link_name">Տեխնիկայի սարքինության տեսակ</span>
             </a>
             <ul class="sub-menu blank">
                 <li>
-                    <a class="link_name" href="#">Տեխնիկայի սարքինության տեսակ</a>
+                    <a class="link_name" href="{{ route('equiment-type.index') }}">Տեխնիկայի սարքինության տեսակ</a>
                 </li>
             </ul>
         </li>

@@ -21,13 +21,16 @@
     width: 25%;
     min-width: 250px;
   }
-  .table-input-search-box > img {
+
+.table-input-search-box > button {
+    border: none;
+    background-color: transparent;
     position: absolute;
     transform: translateY(-50%);
     top: 50%;
     right: 10px;
     cursor: pointer;
-  }
+}
   .table-input::placeholder {
     font-size: 12px;
     letter-spacing: -0.019em;
