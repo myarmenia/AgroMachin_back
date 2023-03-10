@@ -83,20 +83,24 @@
                         <div class="language_block">
                             <div class="selectLanguage">
                                 <label for="" class="language">Լեզու*
-                                    <div class="select">
-                                        <select id="standard-select" name="name">
-                                            <option value="">Ընտրել լեզուն</option>
-                                            <option value="hy">Հայերեն</option>
-                                            <option value="ru">Русский</option>
-                                            <option value="en">English</option>
-                                        </select>
+                                    <div class="select @error('name') error_border @enderror">
+                                        <div class="class="select_container"">
+                                            <select id="standard-select" name="name">
+                                                <option value="">Ընտրել լեզուն</option>
+                                                <option value="hy">Հայերեն</option>
+                                                <option value="ru">Русский</option>
+                                                <option value="en">English</option>
+                                            </select>
+                                        </div>
+                                        @error('name')
+                                            <div class="error_message">{{ $message }}</div>
+                                        @enderror
                                     </div>
+
                                 </label>
-                                @error('name')
-                                    <div class="error_message">{{ $message }}</div>
-                                @enderror
+
                                 <label for="" class="sections">Բաժիններ
-                                    <input type="text" placeholder="Նոր բաժին" name="new_section">
+                                    <input type="text" placeholder="Նոր բաժին" name="new_section" class="@error('name') error_border @enderror">
                                 </label>
                                 @error('new_section')
                                     <div class="error_message">{{ $message }}</div>

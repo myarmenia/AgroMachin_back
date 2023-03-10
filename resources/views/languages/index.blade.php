@@ -2,6 +2,8 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/css/table.css') }}" >
     <link rel="stylesheet" href="{{ asset('assets/css/languages/index.css') }}" >
+    <link rel="stylesheet" href="{{ asset('assets/css/modal.css') }}" >
+
 @endsection
 
 @section('content')
@@ -28,13 +30,13 @@
                         <div class="navbar">
                         <div class="dropdown">
                             <button class="dropbtn">
-                            <div id="drop-title">Սորտավորել</div>
-                            <img src="{{asset('assets/images/table/greyArrow.svg') }}" alt="" />
+                                <div id="drop-title">Սորտավորել</div>
+                                <img src="{{asset('assets/images/table/greyArrow.svg') }}" alt="" />
                             </button>
                             <div class="dropdown-content myDropdown">
-                            <div class="option">Աճման կարգով</div>
-                            <div class="option">Նվազման կարգով</div>
-                            <div class="option">Այբբենական կարգով</div>
+                                <div class="option">Աճման կարգով</div>
+                                <div class="option">Նվազման կարգով</div>
+                                <div class="option">Այբբենական կարգով</div>
                             </div>
                         </div>
                         </div>
@@ -53,7 +55,7 @@
                     </div>
                 </div>
                 <div class="tableChild">
-                    <table>
+                    <table data-route="change-language-status" data-delete="languages" id="table-route">
                         <tr class="firstLine">
                             <td>№</td>
                             <td>Լեզվի բանալի</td>
@@ -68,17 +70,17 @@
                                 <tr>
                                     <td>{{++$i}}</td>
                                     <td>{{$language->name}}</td>
-                                    <td>Հայերեն</td>
+                                    <td></td>
                                     <td>{{$language->id}}</td>
                                     <td>
                                         <label class="toggle">
-                                            <input class="toggle-checkbox" type="checkbox" {{$language->status ? 'checked' : ''}}/>
+                                            <input class="toggle-checkbox" type="checkbox" {{$language->status ? 'checked' : ''}} data-id="{{$language->id}}" >
                                             <div class="toggle-switch"></div>
                                         </label>
                                     </td>
                                     <td>
                                         <div>
-                                            <img src="{{asset('assets/images/table/Trash.svg') }}" alt="" />
+                                            <img src="{{asset('assets/images/table/Trash.svg') }}" alt="" class="trashbin" data-id="{{$language->id}}">
                                         </div>
                                     </td>
                                     <td>
@@ -102,8 +104,13 @@
         <!-- Pagination -->
         {{ $languages->links() }}
         <!-- ======================================================= -->
+        {{-- ============= modal for change status ===================== --}}
+        @include('layouts.modal')
+
       </section>
       @section('script')
+        <script src="{{ asset('assets/js/modal.js') }}"></script>
+    {{--
         <script>
             document.querySelectorAll(".toggle").forEach((el) => {
             el.addEventListener("click", () => showModal("#confirm-modal"));
@@ -111,7 +118,7 @@
             document
             .getElementById("modal-deny-btn")
             .addEventListener("click", hideModal);
-       </script>
+       </script> --}}
     @endsection
 
 @endsection

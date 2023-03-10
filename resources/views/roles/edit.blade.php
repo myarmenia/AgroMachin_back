@@ -99,8 +99,8 @@
                                 @enderror
                             </div>
                             <div class="buttons">
-                                <a class="button1" href="{{route('roles.index')}}">Չեղարկել</a>
-                                <input class="button2" type="submit" value="Պահպանել" />
+                                <a class="submit" href="{{route('roles.index')}}">Չեղարկել</a>
+                                <input class="submit" type="submit" value="Պահպանել" />
                             </div>
                         </div>
                     </form>
