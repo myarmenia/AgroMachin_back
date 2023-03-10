@@ -3,6 +3,7 @@
 @section('style')
     <link rel="stylesheet" href="{{asset('assets/css/table.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/css/countingplaces/countingPlaces.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/modal.css') }}" >
 @endsection
 
 
@@ -36,11 +37,11 @@
                   <span>Հաշվառման վայրեր</span>
                   <div>
                     <div class="main-input-search-box">
-                      <input placeholder="Որոնել" class="main-input" />
-                      <img
-                        src="{{asset('assets/table/inp-search.svg')}}"
-                        alt=""
-                      />
+                        <form method="get" action="/countingplaces/">
+
+                            <input placeholder="Որոնել" class="main-input" name="search_fild" value="{{request()->input('search_fild')}}" />
+                           <button type="submit"> <img src="{{asset('assets/table/inp-search.svg')}}" alt="" /></button>
+                        </form>
                     </div>
 
                   </div>
@@ -48,7 +49,7 @@
 
               </div>
               <div class="vehicleType_table_container">
-                <table>
+                <table  data-route="change-countingplaces-status" data-delete="countingplaces" id="table-route">
                   <thead>
                     <tr class="vehicleType_thead">
                       <td>№</td>
@@ -61,19 +62,19 @@
                   <tbody>
                     @foreach ($countingplace as $items )
                     <tr>
-                        <td></td>
+                        <td>{{ ++$i}}</td>
                         <td>{{$items->name}}</td>
                         <td>
                           <div>
                             <label class="toggle">
-                              <input class="toggle-checkbox" type="checkbox" {{$items->status==1 ? 'checked' : null}}/>
+                              <input class="toggle-checkbox" type="checkbox" {{$items->status==1 ? 'checked' : null}}  data-id="{{ $items->id }}">
                               <div class="toggle-switch"></div>
                             </label>
                           </div>
                         </td>
                         <td>
                           <div>
-                            <img src="{{asset('assets/table/Trash.svg')}}" alt="" />
+                            <img src="{{asset('assets/table/Trash.svg')}}" alt="" class="trashbin" data-id="{{ $items->id }}" >
                           </div>
                         </td>
                         <td>
@@ -89,7 +90,7 @@
               </div>
             </div>
 
-            <div class="new_vehicle">
+            <div class="new_vehicle @error('name')new_vehicle_show @enderror">
               <div class="table-title">
                 <div class="table-title-text">
                   Ստեղծել հաշվառման նոր վայր
@@ -101,10 +102,15 @@
               <form  action="{{route('countingplaces.store')}}" method="post" class="new_vehicle_content">
                 @csrf
                 <div class="new_vehicle_fieldset">
-                  <div>
+                  <div class="input_error">
                     <div class="field_title">Անուն*</div>
-                    <input id="car" placeholder="Տրակտոր" class="main-input" name="name" />
+                    <input id="car" placeholder="Տրակտոր" class="main-input @error('name') error_border @enderror" name="name"/>
+
                   </div>
+                   @error('name')
+                        <div class="error_message">{{ $message }}</div>
+                   @enderror
+
 
                   <div>
                     <div class="field_title">Կարգավիճակ*</div>
@@ -116,29 +122,24 @@
                 </div>
                 <button type="submit" class="addPage">Պահպանել</button>
               </form>
-              @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-             @endif
+
             </div>
 
-            <div class="new_vehicle2">
+            <div class="new_vehicle2 @error('edit_name') new_vehicle2 new_vehicle_show2 @enderror">
               <div class="table-title">
                 <div class="table-title-text">Փոփոխել հաշվառման վայրը</div>
               </div>
-              <form class="new_vehicle_content"  id="edit_counting_place"  method="post" >
+              <form class="new_vehicle_content"  action="countingplaces/{{Session::get('action')}}"   id="edit_counting_place"  method="post" >
                 @csrf
-                @method('PUT')
+                @method('patch')
                 <div class="new_vehicle_fieldset">
                   <div>
                     <div class="field_title">Անուն*</div>
-                    <input id="car1" placeholder="Տրակտոր" value='' class="main-input" name='name'/>
+                    <input id="car1" placeholder="Տրակտոր" value='' class="main-input  @error('edit_name') error_border @enderror " name='edit_name'/>
                   </div>
+                  @error('edit_name')
+                    <div class="error_message">{{ $message }}</div>
+                  @enderror
                   <div>
                     <div class="field_title">Կարգավիճակ*</div>
                     <label class="toggle2">
@@ -154,48 +155,18 @@
           <!-- ------------------------------------------------------- -->
           <!-- Pagination -->
           <!-- ------------------------------------------------------- -->
-          <div class="pagination">
-            <div class="page-item previous-page">
-              <a class="page-link" href="javascript:void(0)"
-                ><span>‹‹</span></a
-              >
-            </div>
-            <div class="page-item current-page">
-              <a class="page-link" href="javascript:void(0)">1</a>
-            </div>
-            <div class="page-item dots">
-              <a class="page-link" href="javascript:void(0)">...</a>
-            </div>
-            <div class="page-item current-page">
-              <a class="page-link" href="javascript:void(0)">5</a>
-            </div>
-            <div class="page-item current-page page-active">
-              <a class="page-link" href="javascript:void(0)">6</a>
-            </div>
-            <div class="page-item current-page">
-              <a class="page-link" href="javascript:void(0)">7</a>
-            </div>
-            <div class="page-item dots">
-              <a class="page-link" href="javascript:void(0)">...</a>
-            </div>
-            <div class="page-item current-page">
-              <a class="page-link" href="javascript:void(0)">13</a>
-            </div>
-            <div class="page-item next-page">
-              <a class="page-link" href="javascript:void(0)"
-                ><span>››</span></a
-              >
-            </div>
-          </div>
+         {{$countingplace->links()}}
           <!-- ======================================================= -->
           <!-- ======================================================= -->
           <!-- ======================================================= -->
+          @include('layouts.modal')
         </div>
       </section>
       <!-- right section end-->
         @section('script')
+            <script src="{{ asset('assets/js/modal.js') }}"></script>
 
-            @if ($errors->any())
+            {{-- @if ($errors->any())
 
                 <script>
                     articleToggle()
@@ -204,7 +175,8 @@
                         document.querySelector('.new_vehicle ').classList.add("new_vehicle_show");
                     }
                 </script>
-            @endif
+            @endif --}}
+
             <script src="{{asset('assets/js/countingplaces/countingPlaces.js')}}"></script>
 
         @endsection

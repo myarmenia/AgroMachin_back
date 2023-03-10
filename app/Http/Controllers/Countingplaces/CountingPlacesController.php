@@ -14,11 +14,23 @@ class CountingPlacesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $paginate = 2;
+        $i=$request['page'] ? ($request['page']-1)*$paginate : 0;
         $query = CountingPlace::latest();
-        $countingplace = $query->paginate(10);
-        return view('countingplaces.index', compact('countingplace'));
+        if($request->search_fild!=null){
+            $query->where('name','like', '%'.$request->search_fild .'%');
+        }
+        $countingplace =$query->paginate($paginate)->withQueryString();
+        return view('countingplaces.index', compact('countingplace','i'))->with('session_search_fild', $request->search_fild);;
+    }
+    public function change_countingplaces_status(Request $request, $id, $status){
+
+        $countingplace = CountingPlace::find($id);
+        $countingplace->status = $status;
+        $countingplace->save();
+        return redirect()->back();
     }
 
     /**
@@ -39,6 +51,13 @@ class CountingPlacesController extends Controller
      */
     public function store(Request $request)
     {
+
+        if($request->has('status')){
+            $request['status']=1;
+
+        }else{
+            $request['status']=0;
+        }
         $validator=Validator::make($request->all(),[
             'name' => 'required|min:2|max:255'
         ]);
@@ -48,7 +67,7 @@ class CountingPlacesController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $countingplace = CountingPlace::create($request->all());
-        return redirect()->back();
+        return redirect('/countingplaces');
     }
 
     /**
@@ -82,12 +101,13 @@ class CountingPlacesController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $validator=Validator::make($request->all(),[
-            'name' => 'required|min:2|max:255'
+            'edit_name' => 'required|min:2|max:255'
         ]);
         if($validator->fails()){
 
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput()->with('action',$id);
         }
 
         $status='';
@@ -98,7 +118,7 @@ class CountingPlacesController extends Controller
         }
 
         $countingplace_update = CountingPlace::where('id',$id)->update([
-            'name'=>$request->name,
+            'name'=>$request->edit_name,
             'status'=>$status
         ]);
 
@@ -115,6 +135,10 @@ class CountingPlacesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deleted = CountingPlace::where('id',$id)->first();
+        $deleted->delete();
+        if($deleted){
+            return redirect()->back();
+        }
     }
 }
