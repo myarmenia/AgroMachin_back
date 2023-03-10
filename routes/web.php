@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('permissions', PermissionController::class);
 
     Route::resource('countingplaces',CountingPlacesController::class);
+    Route::post('change-countingplaces-status/{id}/{status}', [CountingPlacesController::class, 'change_countingplaces_status'])->name('change_countingplaces_status');
 
     Route::resource('equiment-type', EquimentTypeController::class);
     Route::post('equiment-type/search', [EquimentTypeSearchController::class, 'index'])->name('equiment_type_search');
