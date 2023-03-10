@@ -14,10 +14,17 @@ class EquimentTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $equiment_types = EquipmentType::paginate(2);
-        return view('equiment-type.index', compact('equiment_types'));
+
+        if($request->search_inp){
+            $equiment_types = EquipmentType::where('name', 'like', '%' . $request->search_inp . '%')->OrderBy('id', 'desc')->paginate(5)->withQueryString();
+        }else {
+            $equiment_types = EquipmentType::OrderBy('id', 'desc')->paginate(5)->withQueryString();
+        }
+
+        return view('equiment-type.index', compact('equiment_types'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);;
     }
 
     /**
@@ -84,6 +91,7 @@ class EquimentTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $validate = [
             'name' => 'required'
         ];
@@ -91,7 +99,7 @@ class EquimentTypeController extends Controller
         $validator = Validator::make($request->all(), $validate);
 
         if ($validator->fails()) {
-            return back()->with('update_errror', 1)->withErrors($validator);
+            return back()->with('update_errror', $id)->withErrors($validator);
         }
 
         $equiment_type = EquipmentType::find($id);
@@ -111,6 +119,12 @@ class EquimentTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $deleted = EquipmentType::where('id',$id)->first();
+        $deleted->delete();
+        if($deleted){
+            return redirect()->back();
+        }
+
     }
 }

@@ -14,7 +14,7 @@
                 <div class="title-linkChild vehicleType_crumbs_box1">
                     <a href="#" class="link-direction">Գլխավոր</a>
                     <div>></div>
-                    <a href="./page.html" class="link-direction"
+                    <a href="#" class="link-direction"
                     >Տեխնիկայի սարքինության տեսակ</a
                     >
                 </div>
@@ -30,8 +30,10 @@
                         <span> Տեխնիկայի սարքինության տեսակ</span>
                         <div>
                             <div class="main-input-search-box">
-                                <input placeholder="Որոնել" class="main-input" id="search_inp"/>
-                                <img src="../../assets/table/inp-search.svg" alt=""/>
+                                <form action="{{ route('equiment-type.index') }}" method="get" class="table-input-search-box">
+                                    <input placeholder="Որոնել" class="main-input" name="search_inp" value="{{ request()->input('search_inp') }}" id="search_inp"/>
+                                    <button><img src="../../assets/table/inp-search.svg" alt=""/></button>
+                                </form>
                             </div>
                             <!-- <button class="addPage" id="new_record">
                               Ստեղծել գրառում
@@ -41,7 +43,7 @@
                     <!-- <button class="addPage" id="addPage">+ Նոր օգտատեր</button> -->
                 </div>
                 <div class="vehicleType_table_container">
-                    <table>
+                    <table data-delete="equiment-type" id="table-route">
                         <thead>
                         <tr class="vehicleType_thead">
                             <td>№</td>
@@ -51,13 +53,13 @@
                         </tr>
                         </thead>
                         <tbody class="search_content">
-                        @foreach($equiment_types as $k => $type)
+                        @foreach($equiment_types as $type)
                             <tr>
-                                <td>{{ $k+1 }}</td>
+                                <td>{{ ++$i }}</td>
                                 <td>{{ $type->name }}</td>
                                 <td>
                                     <div>
-                                        <img src="{{ asset('assets/images/table/Trash.svg') }}" alt=""/>
+                                        <img src="{{ asset('assets/images/table/Trash.svg') }}" alt="" class="trashbin" data-id="{{ $type->id }}">
                                     </div>
                                 </td>
                                 <td>
@@ -68,6 +70,7 @@
                                             id="change_record"
                                             data-name="{{ $type->name }}"
                                             data-id="{{ $type->id }}"
+                                            data-route="/equiment-type/"
                                         />
                                     </div>
                                 </td>
@@ -89,11 +92,14 @@
                     @csrf
                     <div class="new_vehicle_fieldset">
                         <label for="car">Անուն*</label>
-                        <input id="car" placeholder="Տեքստ" class="main-input @error('name') error_border @enderror" name="name">
+                        <div class="input_error">
+                            <input id="car" placeholder="Տեքստ" class="main-input @error('name') error_border @enderror" name="name">
+                            @error('name')
+                                <div class="error_message">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
-                    @error('name')
-                        <div class="error_message">{{ $message }}</div>
-                    @enderror
+
                     <button class="addPage">Պահպանել</button>
                 </form>
             </div>
@@ -104,16 +110,22 @@
                         Փոփոխել տեխնիկայի սարքինության տեսակը
                     </div>
                 </div>
-                <form class="new_vehicle_content" action="{{ route('equiment-type.update', 1) }}" method="post">
+                <form class="new_vehicle_content" action="/equiment-type/{{ session('update_errror') }}" method="post" id="update_form">
                     @csrf
                     @method('PATCH')
                     <div class="new_vehicle_fieldset">
                         <label for="car">Անուն*</label>
-                        <input id="car" placeholder="լրացված տեսակը" class="main-input" name="name" />
+
+                        <div class="input_error">
+                            <input id="car" placeholder="լրացված տեսակը" class="main-input @error('name') error_border @enderror" name="name" />
+
+                            @error('name')
+                                <div class="error_message">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
-                    @error('name')
-                        <div class="error_message">{{ $message }}</div>
-                    @enderror
+
+
                     <button class="addPage">Պահպանել</button>
                 </form>
             </div>
@@ -126,10 +138,15 @@
     <!-- ======================================================= -->
     <!-- ======================================================= -->
     <!-- ======================================================= -->
+
+
+        @include('layouts.modal')
+
 </section>
 
     @section('script')
         <script src="{{ asset('assets/js/equiment-type/equiment-type.js') }}"></script>
+        <script src="{{ asset('assets/js/modal.js') }}"></script>
     @endsection
 
 @endsection

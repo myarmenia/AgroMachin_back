@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\EquipmentType\EquimentTypeController;
 use \App\Http\Controllers\EquipmentType\EquimentTypeSearchController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,6 +49,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('countingplaces',CountingPlacesController::class);
 
     Route::resource('equiment-type', EquimentTypeController::class);
-    Route::post('equiment-type/search', [EquimentTypeSearchController::class, 'index'])->name('equiment_type_search');
 
 });
